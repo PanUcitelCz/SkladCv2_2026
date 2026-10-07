@@ -1,5 +1,6 @@
 ﻿using DataEntity.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DataEntity
 {
@@ -15,14 +16,36 @@ namespace DataEntity
             {
                 optionsBuilder.
                     UseSqlServer(
-                        "Server=localhost;" +
+                        "Data Source=(localdb)\\MSSQLLocalDB;" +
                         "Database=SkladCv2_2026;" +
-                        "User Id=sa;" +
-                        "Password=123456;" +
+                        "Integrated Security=True;" +
                         "TrustServerCertificate=True;")
                     .UseLazyLoadingProxies();
             }
+            
         }
+
+        public void Seed()
+        {
+            // Kontrola, zda již v DB nejsou data, aby se zabránilo duplicitám.
+            if (MernaJednotka.Any())
+            {
+                return; // Databáze již byla naplněna.
+            }
+
+            // Vytvoření měrných jednotek
+            var mjKs = new MernaJednotka { Popis = "ks" };
+            var mjKg = new MernaJednotka { Popis = "kg" };
+            var mjM3 = new MernaJednotka { Popis = "m3" };
+
+
+            // Přidání všech nových objektů do kontextu
+            MernaJednotka.AddRange(mjKs, mjKg, mjM3);
+
+            // Jediné finální uložení všech změn do databáze
+            SaveChanges();
+        }
+
 
     }
 }
