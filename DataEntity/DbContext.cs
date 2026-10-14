@@ -25,27 +25,14 @@ namespace DataEntity
             
         }
 
-        public void Seed()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Kontrola, zda již v DB nejsou data, aby se zabránilo duplicitám.
-            if (MernaJednotka.Any())
-            {
-                return; // Databáze již byla naplněna.
-            }
+            base.OnModelCreating(modelBuilder);
 
-            // Vytvoření měrných jednotek
-            var mjKs = new MernaJednotka { Popis = "ks" };
-            var mjKg = new MernaJednotka { Popis = "kg" };
-            var mjM3 = new MernaJednotka { Popis = "m3" };
-
-
-            // Přidání všech nových objektů do kontextu
-            MernaJednotka.AddRange(mjKs, mjKg, mjM3);
-
-            // Jediné finální uložení všech změn do databáze
-            SaveChanges();
+            modelBuilder.Entity<MernaJednotka>().HasData(
+                new MernaJednotka { MernaJednotkaId = 1, Popis = "ks" },
+                new MernaJednotka { MernaJednotkaId = 2, Popis = "kg" },
+                new MernaJednotka { MernaJednotkaId = 3, Popis = "m3" });
         }
-
-
     }
 }

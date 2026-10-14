@@ -77,6 +77,23 @@ namespace DataEntity.Migrations
                     b.HasKey("MernaJednotkaId");
 
                     b.ToTable("MernaJednotka");
+
+                    b.HasData(
+                        new
+                        {
+                            MernaJednotkaId = 1,
+                            Popis = "ks"
+                        },
+                        new
+                        {
+                            MernaJednotkaId = 2,
+                            Popis = "kg"
+                        },
+                        new
+                        {
+                            MernaJednotkaId = 3,
+                            Popis = "m3"
+                        });
                 });
 
             modelBuilder.Entity("DataEntity.Data.Material", b =>
