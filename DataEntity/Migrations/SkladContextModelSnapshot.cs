@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DataEntity.Migrations.Sklad
+namespace DataEntity.Migrations
 {
     [DbContext(typeof(SkladContext))]
     partial class SkladContextModelSnapshot : ModelSnapshot
@@ -35,9 +35,6 @@ namespace DataEntity.Migrations.Sklad
 
                     b.Property<DateTime>("Datum")
                         .HasColumnType("date");
-
-                    b.Property<DateTime>("DatumVytvoreni")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Komentar")
                         .IsRequired()
@@ -68,19 +65,6 @@ namespace DataEntity.Migrations.Sklad
                     b.HasIndex("MernaJednotkaId");
 
                     b.ToTable("Material");
-
-                    b.HasData(
-                        new
-                        {
-                            MaterialId = 1,
-                            Datum = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DatumVytvoreni = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Komentar = "Komentar k Vrutu 6",
-                            MernaJednotkaId = 1,
-                            MnozDoPal = 0,
-                            MnozPoj = 0,
-                            Nazev = "Vrut 6"
-                        });
                 });
 
             modelBuilder.Entity("DataEntity.Data.MernaJednotka", b =>
@@ -91,7 +75,7 @@ namespace DataEntity.Migrations.Sklad
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MernaJednotkaId"));
 
-                    b.Property<DateTime>("DatumVytvoreni")
+                    b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Popis")
@@ -113,19 +97,19 @@ namespace DataEntity.Migrations.Sklad
                         new
                         {
                             MernaJednotkaId = 1,
-                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 941, DateTimeKind.Local).AddTicks(1469),
+                            Datum = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Popis = "ks"
                         },
                         new
                         {
                             MernaJednotkaId = 2,
-                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5912),
+                            Datum = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Popis = "kg"
                         },
                         new
                         {
                             MernaJednotkaId = 3,
-                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5925),
+                            Datum = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Popis = "m3"
                         });
                 });
@@ -142,7 +126,7 @@ namespace DataEntity.Migrations.Sklad
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("DatumVytvoreni")
+                    b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Komentar")

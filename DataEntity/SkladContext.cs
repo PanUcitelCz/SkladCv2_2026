@@ -18,34 +18,21 @@ namespace DataEntity
                 optionsBuilder.
                     UseSqlServer(
                         "Data Source=(localdb)\\MSSQLLocalDB;" +
-                        "Database=SkladCv2_2026;" +
+                        "Database=SkladCv2_2026_1;" +
                         "Integrated Security=True;" +
                         "TrustServerCertificate=True;")
                     .UseLazyLoadingProxies();
             }
             
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<MernaJednotka>().HasData(
                 new MernaJednotka { MernaJednotkaId = 1, Popis = "ks" },
                 new MernaJednotka { MernaJednotkaId = 2, Popis = "kg" },
                 new MernaJednotka { MernaJednotkaId = 3, Popis = "m3" });
-
-            modelBuilder.Entity<Material>().HasData(
-                new
-                {
-                    MaterialId = 1,
-                    Nazev = "Vrut 6",
-                    MnozPoj = 0,
-                    MnozDoPal = 0,
-                    Datum = new DateTime(2026, 1, 1),
-                    DatumVytvoreni = new DateTime(2026, 1, 1),
-                    Komentar = "Komentar k Vrutu 6",
-                    MernaJednotkaId = 1
-                });
         }
     }
 }

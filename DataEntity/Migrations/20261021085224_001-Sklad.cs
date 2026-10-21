@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace DataEntity.Migrations.Sklad
+namespace DataEntity.Migrations
 {
     /// <inheritdoc />
-    public partial class _006_Sklad : Migration
+    public partial class _001Sklad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace DataEntity.Migrations.Sklad
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Popis = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    DatumVytvoreni = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Datum = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,7 @@ namespace DataEntity.Migrations.Sklad
                     Datum = table.Column<DateTime>(type: "date", nullable: false),
                     Komentar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MernaJednotkaId = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    DatumVytvoreni = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,7 +66,7 @@ namespace DataEntity.Migrations.Sklad
                     MaterialId = table.Column<int>(type: "int", nullable: true),
                     Komentar = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    DatumVytvoreni = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Datum = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,18 +80,13 @@ namespace DataEntity.Migrations.Sklad
 
             migrationBuilder.InsertData(
                 table: "MernaJednotka",
-                columns: new[] { "MernaJednotkaId", "DatumVytvoreni", "Popis" },
+                columns: new[] { "MernaJednotkaId", "Datum", "Popis" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2026, 10, 21, 10, 17, 51, 941, DateTimeKind.Local).AddTicks(1469), "ks" },
-                    { 2, new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5912), "kg" },
-                    { 3, new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5925), "m3" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ks" },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "kg" },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "m3" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Material",
-                columns: new[] { "MaterialId", "Datum", "DatumVytvoreni", "Komentar", "MernaJednotkaId", "MnozDoPal", "MnozPoj", "Nazev" },
-                values: new object[] { 1, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Komentar k Vrutu 6", 1, 0, 0, "Vrut 6" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Material_MernaJednotkaId",

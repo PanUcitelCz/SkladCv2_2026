@@ -80,7 +80,7 @@ namespace DataEntity.Data.Base
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public DateTime DatumVytvoreni { get; set; } = DateTime.Now;
+        public DateTime Datum { get; set; }
 
     }
 }
