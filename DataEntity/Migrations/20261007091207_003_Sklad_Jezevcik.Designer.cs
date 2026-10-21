@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataEntity.Migrations
 {
-    [DbContext(typeof(SkladContext))]
+    [DbContext(typeof(DbContext))]
     [Migration("20261007091207_003_Sklad_Jezevcik")]
     partial class _003_Sklad_Jezevcik
     {

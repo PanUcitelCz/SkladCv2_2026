@@ -9,6 +9,7 @@ namespace DataEntity
     {
         public DbSet<Material> Material => Set<Material>();
         public DbSet<MernaJednotka> MernaJednotka => Set<MernaJednotka>();
+        public DbSet<Paleta> Paleta => Set<Paleta>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,12 +28,24 @@ namespace DataEntity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<MernaJednotka>().HasData(
                 new MernaJednotka { MernaJednotkaId = 1, Popis = "ks" },
                 new MernaJednotka { MernaJednotkaId = 2, Popis = "kg" },
                 new MernaJednotka { MernaJednotkaId = 3, Popis = "m3" });
+
+            modelBuilder.Entity<Material>().HasData(
+                new
+                {
+                    MaterialId = 1,
+                    Nazev = "Vrut 6",
+                    MnozPoj = 0,
+                    MnozDoPal = 0,
+                    Datum = new DateTime(2026, 1, 1),
+                    DatumVytvoreni = new DateTime(2026, 1, 1),
+                    Komentar = "Komentar k Vrutu 6",
+                    MernaJednotkaId = 1
+                });
         }
     }
 }

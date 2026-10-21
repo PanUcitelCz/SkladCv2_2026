@@ -12,7 +12,7 @@ namespace DataEntity.Data
 {
     [AddINotifyPropertyChangedInterface]
     [Table("MernaJednotka")] // Nezapomenout přejmenovat, když už jsme líní :)
-    public class MernaJednotka
+    public class MernaJednotka : Base.BaseModel
     {
         [Key]
         public int MernaJednotkaId { get; set; }

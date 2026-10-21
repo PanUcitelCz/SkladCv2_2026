@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DataEntity.Migrations
+namespace DataEntity.Migrations.Sklad
 {
     [DbContext(typeof(SkladContext))]
     partial class SkladContextModelSnapshot : ModelSnapshot
@@ -36,6 +36,9 @@ namespace DataEntity.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("DatumVytvoreni")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Komentar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -51,14 +54,33 @@ namespace DataEntity.Migrations
 
                     b.Property<string>("Nazev")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("MaterialId");
 
                     b.HasIndex("MernaJednotkaId");
 
                     b.ToTable("Material");
+
+                    b.HasData(
+                        new
+                        {
+                            MaterialId = 1,
+                            Datum = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVytvoreni = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Komentar = "Komentar k Vrutu 6",
+                            MernaJednotkaId = 1,
+                            MnozDoPal = 0,
+                            MnozPoj = 0,
+                            Nazev = "Vrut 6"
+                        });
                 });
 
             modelBuilder.Entity("DataEntity.Data.MernaJednotka", b =>
@@ -69,10 +91,19 @@ namespace DataEntity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MernaJednotkaId"));
 
+                    b.Property<DateTime>("DatumVytvoreni")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Popis")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("MernaJednotkaId");
 
@@ -82,18 +113,65 @@ namespace DataEntity.Migrations
                         new
                         {
                             MernaJednotkaId = 1,
+                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 941, DateTimeKind.Local).AddTicks(1469),
                             Popis = "ks"
                         },
                         new
                         {
                             MernaJednotkaId = 2,
+                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5912),
                             Popis = "kg"
                         },
                         new
                         {
                             MernaJednotkaId = 3,
+                            DatumVytvoreni = new DateTime(2026, 10, 21, 10, 17, 51, 942, DateTimeKind.Local).AddTicks(5925),
                             Popis = "m3"
                         });
+                });
+
+            modelBuilder.Entity("DataEntity.Data.Paleta", b =>
+                {
+                    b.Property<int>("PaletaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaletaId"));
+
+                    b.Property<string>("AdresaUlozeni")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("DatumVytvoreni")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Komentar")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mnozstvi")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("Stav")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Typ")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaletaId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("Paleta");
                 });
 
             modelBuilder.Entity("DataEntity.Data.Material", b =>
@@ -105,6 +183,20 @@ namespace DataEntity.Migrations
                         .IsRequired();
 
                     b.Navigation("MernaJednotka");
+                });
+
+            modelBuilder.Entity("DataEntity.Data.Paleta", b =>
+                {
+                    b.HasOne("DataEntity.Data.Material", "Material")
+                        .WithMany("Paleta")
+                        .HasForeignKey("MaterialId");
+
+                    b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("DataEntity.Data.Material", b =>
+                {
+                    b.Navigation("Paleta");
                 });
 
             modelBuilder.Entity("DataEntity.Data.MernaJednotka", b =>
