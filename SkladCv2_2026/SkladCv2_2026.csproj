@@ -27,4 +27,9 @@
     <ProjectReference Include="..\DataEntity\DataEntity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\MainMenu\" />
+    <Folder Include="Styles\" />
+  </ItemGroup>
+
 </Project>
